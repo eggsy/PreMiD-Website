@@ -114,10 +114,10 @@
                 </div>
               </li>
               <!-- <li>
-                <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
-                        class="label label_tag">36</span></p>
+                                <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
+                                        class="label label_tag">36</span></p>
               </li>-->
-              <li>
+              <li v-if="!presenceData.regExp">
                 <p>
                   <i class="fas fa-link" />
                   {{ $t('presence.sections.information.supportedurls') }}:
@@ -127,6 +127,19 @@
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
+              </li>
+              <li v-if="presenceData.regExp">
+                <p>
+                  <i class="fas fa-link" />
+                  URL RegExp:
+                </p>
+                <div class="presence-regexp">
+                  <ul class="presence-urls">
+                    <li>
+                  <p>{{ presenceData.regExp }}</p>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
@@ -140,8 +153,8 @@
 import PresenceMixin from "../../components/mixins/Presence";
 import axios from "axios";
 
-import tinycolor from "tinycolor2";
-import marked from "marked";
+const tinycolor = require("tinycolor2");
+const marked = require("marked");
 
 export default {
   name: "presencePage",

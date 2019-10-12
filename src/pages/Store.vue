@@ -4,7 +4,7 @@
     <div v-if="!$root.isProcessing" class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
-        <input class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
+        <input class="searchbar" placeholder="Search" v-model="presenceSearch" />
         <div class="searchbar-container__controls">
           <div class="nsfw_toggle pmd_checkbox">
             <p>NSFW</p>
@@ -18,25 +18,13 @@
     </div>
 
     <transition name="slide-down" mode="in-out">
-      <div v-if="!$root.isProcessing" class="container">
+      <div
+        v-if="!$root.isProcessing"
+        class="container"
+      >
         <div class="category-container">
-          <router-link
-            class="label"
-            :class="{'router-link-exact-active': currentCategory == 'all'}"
-            :to="{ query: {page: currentPageNumber, category: 'all' } }"
-          >
-            <i :class="'fas fa-map'" />
-            {{$t('store.category.all')}}
-          </router-link>
-          <router-link
-            class="label"
-            v-for="category in this.categories"
-            :key="category.id"
-            :to="{ query: {page: currentPageNumber, category: category.id } }"
-          >
-            <i :class="'fas fa-' + category.icon" />
-            {{ category.title }}
-          </router-link>
+          <router-link class="label" :class="{'router-link-exact-active': currentCategory == 'all'}" :to="{ query: {page: currentPageNumber, category: 'all' } }"><i :class="'fas fa-map'" /> All</router-link>
+          <router-link class="label" v-for="category in this.categories" :key="category.id" :to="{ query: {page: currentPageNumber, category: category.id } }"><i :class="'fas fa-' + category.icon" /> {{ category.title }}</router-link>
         </div>
 
         <h1 class="heading" v-if="filteredPresences.length <= 0">
@@ -44,15 +32,19 @@
           <i class="fas fa-sad-tear"></i>
         </h1>
         <div class="presence-container">
+          
           <StoreCard
             v-for="presence in paginatedData"
             v-bind:key="presence.service"
             :presence="presence"
           />
+         
         </div>
       </div>
     </transition>
-    <div class="pagination-container">
+    <div
+      class="pagination-container"
+    >
       <Pagination
         v-if="this.$data.presenceSearch == ''"
         :pageCategory="this.currentCategory"
@@ -65,6 +57,7 @@
 
 <script>
 import StoreCard from "./../components/StoreCard.vue";
+import CategoryCard from "./../components/CategoryCard";
 import Pagination from "./../components/Pagination";
 
 import axios from "axios";
@@ -73,6 +66,7 @@ import { Promise } from "q";
 export default {
   name: "store",
   components: {
+    CategoryCard,
     StoreCard,
     Pagination
   },
@@ -87,27 +81,27 @@ export default {
         games: {
           icon: "leaf",
           id: "games",
-          title: this.$t("store.category.games")
+          title: "Games"
         },
         music: {
           icon: "music",
           id: "music",
-          title: this.$t("store.category.music")
+          title: "Music"
         },
         socials: {
           icon: "comments",
           id: "socials",
-          title: this.$t("store.category.socials")
+          title: "Socials"
         },
         videos: {
           icon: "play",
           id: "videos",
-          title: this.$t("store.category.videos")
+          title: "Videos & Streams"
         },
         other: {
           icon: "box",
           id: "other",
-          title: this.$t("store.category.other")
+          title: "Other"
         }
       },
       presences: [],
@@ -146,16 +140,16 @@ export default {
       .catch(function(error) {
         console.error(error);
         self.$root.isProcessing = false;
-        if (error.request) self.$router.push({ path: "/maintenance" });
+        if(error.request) self.$router.push({path: '/maintenance'});
       });
   },
   computed: {
     currentCategory() {
-      if (this.$attrs.category) {
-        return this.$attrs.category;
-      } else {
-        return "all";
-      }
+        if(this.$attrs.category) {
+          return this.$attrs.category;
+        } else {
+          return 'all';
+        }
     },
     filteredPresences() {
       return this.$data.presences
@@ -169,17 +163,18 @@ export default {
         )
         .filter(presence => {
           console.log(this.currentCategory);
-          if (this.currentCategory == "all") {
+          if(this.currentCategory == 'all') {
             return presence;
           } else {
             return presence.category == this.currentCategory;
           }
+          
         })
         .sort((a, b) => a.service.localeCompare(b.service));
     },
     currentPageNumber() {
       if (Number(this.$route.query.page)) {
-        if (this.pageCount < this.$route.query.page) {
+        if(this.pageCount < this.$route.query.page) {
           return 1;
         } else {
           return Number(this.$route.query.page);

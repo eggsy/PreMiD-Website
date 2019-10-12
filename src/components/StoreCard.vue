@@ -88,7 +88,7 @@
 
 <script>
 import PresenceMixin from "./mixins/Presence";
-import tinycolor from "tinycolor2";
+const tinycolor = require("tinycolor2");
 
 export default {
   name: "StoreCard",
