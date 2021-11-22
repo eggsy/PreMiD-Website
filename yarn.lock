@@ -5645,10 +5645,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.7.tgz#6e14b595581d2319cdcf033a24caaf41455a01fb"
-  integrity sha512-No11hFYcXr/zkBvL6qFmAp1z6BKY3zqLMHny/JN/ey+al7qwCM2+CMBL9BOgqMxZU36fz4cCWfn2poWIf7QRXA==
+marked@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.4.tgz#d7cb16adaa474291307c521824c5716d32b95c36"
+  integrity sha512-d8v7SensuOj+gxi0TGbqb2WtS60ycZfZuqtmAB9yz0JLotKerTob/47Qk9oLCDmn5G1dcdn3d5ydR+ih9dvS0A==
 
 md5.js@^1.3.4:
   version "1.3.5"
